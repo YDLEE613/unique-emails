@@ -1,0 +1,27 @@
+﻿@using UniqueEmail.Models;
+
+@model Emails
+@{ 
+    ViewBag.Title = "Results";
+}
+
+
+<div class="col-sm-offset-1">
+        <!--
+    <table class="table table-responsive" style="text-align:left">
+            <thead>
+
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+                </tbody>
+
+            </table>
+        -->
+    @foreach(String each in Model.uniqueEmails)
+    {
+        <h1>@each</h1>
+    }
+</div>
+

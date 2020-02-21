@@ -1,0 +1,93 @@
+﻿@using UniqueEmail.Models
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+@model EmailsUtil
+
+<script type="text/javascript">
+    var counter = 1;
+
+    $(function () {
+        $('#add').click(function () {
+            $('<div id="tableRow' + counter + '">' +
+                '<div>' +
+                '<input type="text" class="text-left" name="emailList[' + counter + '].emailAddress" placeholder="Enter an email address" value="" required="required" style="margin: 10px 0px 10px 0px"/>' +
+                '<button type="button" class="btn-danger" style="margin-left: 4px;" onclick="removeTr(' + counter + ');">Delete</button>' +
+                '</div>' +
+                '</div>').appendTo('#inputForm');
+            counter++;
+            console.log(counter);
+            return false;
+        });
+    });
+
+    function removeTr(index) {
+        if (counter > 1) {
+            $('#tableRow' + index).remove();
+            counter--;
+        }
+        return false;
+    }
+</script>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row" style="margin-top:100px;">
+        <div style="display: block; width:100%">
+            <div style="float: left; width:50%;">
+                <!-- add -->
+                <div>
+                    <input id="add" class="btn-primary" type="button" value="Add" />
+                </div>
+                <!-- email inputs-->
+                <div id="inputForm">
+                    <div id="tableRow[0]">
+                        <div>
+                            <input type="text" class="text-left" name="emailList[0].emailAddress" placeholder="Enter an email address" value="" required="required" style="margin: 10px 0px 10px 0px" />
+                            <button type="button" class="btn-danger" style="margin-left: 0px;" onclick="removeTr(0);">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- submit -->
+                <div>
+                    <input type="submit" class="btn-success" value="Submit" />
+                </div>
+            </div>
+
+            <!-- results -->
+            <div style="display: inline-block; margin-left:50px;">
+                <div>
+                    @if (Model != null)
+                    {
+                        <table class="table table-responsive table-bordered" style="text-align:left">
+                            @if (Model.uniqueEmails != null)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="text-left" scope="col">
+                                            Number of Unique Emails: @Model.uniqueEmails.Count
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (string each in Model.uniqueEmails)
+                                    {
+                                        <tr>
+                                            <th scope="col">
+                                                @each
+                                            </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            }
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
