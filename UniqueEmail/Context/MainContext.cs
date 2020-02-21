@@ -112,7 +112,7 @@ namespace UniqueEmailContext
 
         private int GetPlusPos(string email)
         {
-            return email.IndexOf(_plusSign); ;
+            return email.IndexOf(_plusSign);
         }
 
         private int GetAtPos(string email)
